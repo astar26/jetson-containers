@@ -140,6 +140,8 @@ def scan_packages(package_dirs=_PACKAGE_DIRS, rescan=False):
     packages = config_package(package)  # returns a list (including subpackages)
 
     for pkg in packages:
+        if package_name.startswith("torch"):
+            print(f"{pkg['name']=}")
         _PACKAGES[pkg['name']] = pkg
         
     return _PACKAGES
