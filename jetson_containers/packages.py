@@ -136,6 +136,7 @@ def scan_packages(package_dirs=_PACKAGE_DIRS, rescan=False):
         return _PACKAGES
         
     package['name'] = package_name
+    print(f"{package_name=}")
     packages = config_package(package)  # returns a list (including subpackages)
 
     for pkg in packages:
