@@ -1,7 +1,7 @@
 #---
 # name: numpy-py311
 # group: core
-# depends: [build-essential, python]
+# depends: [build-essential, python3.11]
 # test: test.py
 #---
 ARG BASE_IMAGE

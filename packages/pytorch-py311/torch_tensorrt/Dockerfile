@@ -1,8 +1,8 @@
 #---
-# name: torch_tensorrt
+# name: torch_tensorrt-py311
 # group: pytorch
 # config: config.py
-# depends: [pytorch, torchvision, bazel]
+# depends: [pytorch-py311, torchvision-py311, bazel]
 # test: [test.py, test.sh]
 # notes: https://pytorch.org/TensorRT/getting_started/installation.html#installation
 #---
@@ -32,17 +32,17 @@ RUN git clone --branch=${TORCH_TRT_VERSION} --depth=1 https://github.com/pytorch
     sed "s|^        'torch>=.*|        'torch',|g" -i setup.py && \
     sed 's|^    python_requires=.*|    python_requires=\">=3.6\",|g' -i setup.py && \
     cat setup.py && \    
-    #python3 setup.py install --jetpack-version ${JETPACK_MAJOR}.${JETPACK_MINOR} --use-cxx11-abi && \
-    python3 setup.py bdist_wheel --jetpack-version ${JETPACK_MAJOR}.${JETPACK_MINOR} --use-cxx11-abi && \
+    #python3.11 setup.py install --jetpack-version ${JETPACK_MAJOR}.${JETPACK_MINOR} --use-cxx11-abi && \
+    python3.11 setup.py bdist_wheel --jetpack-version ${JETPACK_MAJOR}.${JETPACK_MINOR} --use-cxx11-abi && \
     cp dist/torch_tensorrt*.whl /opt && \
     cd ../../ && \
     rm -rf torch_tensorrt
 
-RUN pip3 install --no-cache-dir --verbose /opt/torch_tensorrt*.whl
+RUN python3.11 -m pip install --no-cache-dir --verbose /opt/torch_tensorrt*.whl
     
 # ./torchtrtc: error while loading shared libraries: libtorch.so: cannot open shared object file
 ENV LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib/python${PYTHON_VERSION}/dist-packages/torch/lib
 ENV PATH=${PATH}:/usr/local/lib/python${PYTHON_VERSION}/dist-packages/torch_tensorrt/bin
 
 # make sure it loads
-RUN pip3 show torch_tensorrt && python3 -c 'import torch_tensorrt; print(torch_tensorrt.__version__)'
+RUN python3.11 -m pip show torch_tensorrt && python3.11 -c 'import torch_tensorrt; print(torch_tensorrt.__version__)'

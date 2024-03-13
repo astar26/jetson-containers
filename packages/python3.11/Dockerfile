@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y software-properties-common &&  \
     apt-get install -y --no-install-recommends \
 		  python3.11-dev python3.11-distutils \
     && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean \
+    && apt-get clean
 RUN wget https://bootstrap.pypa.io/get-pip.py && python3.11 get-pip.py && rm get-pip.py
     
 RUN python3.11 -m pip --version && \

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.11
 print('testing torch_tensorrt...')
 
 import torch_tensorrt
