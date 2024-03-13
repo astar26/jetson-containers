@@ -33,8 +33,8 @@ def pytorch_build(version, dockerfile='Dockerfile.builder', build_env_variables=
     """
     pkg = package.copy()
     
-    pkg['name'] = f'pytorch:{version}'
-    pkg['alias'] = f'torch:{version}'
+    pkg['name'] = f'pytorch-py311:{version}'
+    pkg['alias'] = f'torch-py311:{version}'
     
     if suffix:
         pkg['name'] += '-' + suffix
