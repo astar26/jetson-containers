@@ -158,7 +158,6 @@ def find_package(package, required=True, scan=True):
 
     for key, pkg in _PACKAGES.items():
         names = [key, pkg['name']] + pkg.get('alias', [])
-        print(f"{names=}, {package=}")
 
         if len(fnmatch.filter(names, package)) > 0:
             return pkg
