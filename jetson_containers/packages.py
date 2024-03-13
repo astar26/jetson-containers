@@ -70,6 +70,7 @@ def scan_packages(package_dirs=_PACKAGE_DIRS, rescan=False):
             scan_packages(path)
             
         _PACKAGE_SCAN = True  # flag that all dirs have been scanned
+        print(f"Looking for packages {list(_PACKAGES.keys())}")
 
         for key in _PACKAGES.copy():  # make sure all dependencies are met
             try:

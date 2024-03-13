@@ -1,5 +1,5 @@
 #---
-# name: pytorch-py311
+# name: "pytorch-py311"
 # alias: torch-py311
 # group: pytorch
 # config: config.py
