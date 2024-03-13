@@ -68,6 +68,7 @@ def pytorch_build(version, dockerfile='Dockerfile.builder', build_env_variables=
     
     return pkg
 
+print("$$$$$ AM HERE #####")
 package = [
     # JetPack 6
     pytorch('2.1', 'torch-2.1.0-cp310-cp310-linux_aarch64.whl', 'https://nvidia.box.com/shared/static/0h6tk4msrl9xz3evft9t0mpwwwkw7a32.whl', '==36.*', default=True, alias='pytorch:distributed'),

@@ -1,7 +1,7 @@
 #---
 # name: "pytorch-py311"
 # alias: torch-py311
-# group: pytorch
+# group: pytorch-py311
 # config: config.py
 # depends: [cuda, cudnn, tensorrt, numpy-py311, onnx-py311]
 # test: test.py

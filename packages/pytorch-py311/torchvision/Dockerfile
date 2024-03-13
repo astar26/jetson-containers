@@ -1,6 +1,6 @@
 #---
 # name: torchvision-py311
-# group: pytorch
+# group: pytorch-py311
 # config: config.py
 # depends: [pytorch-py311, cmake]
 # test: test.py

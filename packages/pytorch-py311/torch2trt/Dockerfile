@@ -1,6 +1,6 @@
 #---
 # name: torch2trt-py311
-# group: pytorch
+# group: pytorch-py311
 # config: config.py
 # depends: [pytorch-py311, torchvision-py311]
 # test: test.py
