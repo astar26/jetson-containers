@@ -27,10 +27,10 @@ RUN git clone --branch ${TORCHVISION_VERSION} --recursive --depth=1 https://gith
     cp dist/torchvision*.whl /opt && \
     rm -rf ../torchvision
 
-RUN pip3.11 install --no-cache-dir --verbose /opt/torchvision*.whl
+RUN python3.11 -m pip install --no-cache-dir --verbose /opt/torchvision*.whl
 RUN python3.11 -c 'import torchvision; print(torchvision.__version__);'
 
 # note:  this was used on older torchvision versions (~0.4) to workaround a bug,
 #        but has since started causing another bug as of torchvision 0.11.1
 # ARG PILLOW_VERSION=pillow<7    
-# pip3.11 install --no-cache-dir "${PILLOW_VERSION}"
+# python3.11 -m pip install --no-cache-dir "${PILLOW_VERSION}"

@@ -17,6 +17,6 @@ RUN if [ `lsb_release --codename --short` != 'bionic' ]; then \
       pip3 install --no-cache-dir --verbose protobuf==4.22.3; \
     fi
 
-RUN pip3.11 install --no-cache-dir --verbose git+https://github.com/onnx/onnx@${ONNX_VERSION}
+RUN python3.11 -m pip install --no-cache-dir --verbose git+https://github.com/onnx/onnx@${ONNX_VERSION}
 
-RUN pip3.11 show onnx && python3.11 -c 'import onnx; print(onnx.__version__)'
+RUN python3.11 -m pip show onnx && python3.11 -c 'import onnx; print(onnx.__version__)'

@@ -33,7 +33,7 @@ RUN cd /opt/stable-diffusion-webui && \
     sed 's|list\[.*\]|list|g' -i modules/script_callbacks.py
 
 # https://github.com/AUTOMATIC1111/stable-diffusion-webui/issues/13236
-RUN pip3.11 install --no-cache-dir httpx==0.24.1
+RUN python3.11 -m pip install --no-cache-dir httpx==0.24.1
 
 # test that it loads
 RUN cd /opt/stable-diffusion-webui && python3.11 launch.py --help

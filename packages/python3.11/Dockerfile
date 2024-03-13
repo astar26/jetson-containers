@@ -10,14 +10,14 @@ FROM ${BASE_IMAGE}
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN add-apt-repository ppa:deadsnakes/ppa && apt-get update && \
+RUN apt-get update && apt-get install -y software-properties-common &&  \
+    add-apt-repository ppa:deadsnakes/ppa && apt-get update && \
     apt-get install -y --no-install-recommends \
-		  python3.11-dev \
-		  python3.11-pip \
+		  python3.11-dev python3.11-distutils \
     && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
+    && apt-get clean && python3.11 -m ensurepip --upgrade
     
-RUN which pip3 && pip3.11 --version && \
+RUN python3.11 -m pip --version && \
     python3.11 -m pip install --upgrade pip
 
 # this was causing issues downstream (e.g. Python2.7 still around in Ubuntu 18.04,
@@ -26,12 +26,12 @@ RUN which pip3 && pip3.11 --version && \
 #    update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
     
 RUN which python || python --version || pip --version || \
-    which python3.11 || python3.11 --version || pip3.11 --version
+    which python3.11 || python3.11 --version || python3.11 -m pip --version
 
-RUN pip3.11 install --upgrade --no-cache-dir \
+RUN python3.11 -m pip install --upgrade --no-cache-dir \
 	setuptools \
 	packaging \
 	'Cython<3' \
 	wheel
 	
-RUN pip3.11 install --no-cache-dir --verbose wget psutil
+RUN python3.11 -m pip install --no-cache-dir --verbose wget psutil

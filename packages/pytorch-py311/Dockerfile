@@ -32,19 +32,19 @@ ARG PYTORCH_WHL
 
 RUN cd /opt && \
     wget --quiet --show-progress --progress=bar:force:noscroll --no-check-certificate ${PYTORCH_URL} -O ${PYTORCH_WHL} && \
-    pip3.11 install --verbose ${PYTORCH_WHL}
+    python3.11 -m pip install --verbose ${PYTORCH_WHL}
 
 RUN python3 -c 'import torch; print(f"PyTorch version: {torch.__version__}"); print(f"CUDA available:  {torch.cuda.is_available()}"); print(f"cuDNN version:   {torch.backends.cudnn.version()}"); print(torch.__config__.show());'
 
 # patch for https://github.com/pytorch/pytorch/issues/45323
-RUN PYTHON_ROOT=`pip3.11 show torch | grep Location: | cut -d' ' -f2` && \
+RUN PYTHON_ROOT=`python3.11 -m pip show torch | grep Location: | cut -d' ' -f2` && \
     TORCH_CMAKE_CONFIG=$PYTHON_ROOT/torch/share/cmake/Torch/TorchConfig.cmake && \
     echo "patching _GLIBCXX_USE_CXX11_ABI in ${TORCH_CMAKE_CONFIG}" && \
     sed -i 's/  set(TORCH_CXX_FLAGS "-D_GLIBCXX_USE_CXX11_ABI=")/  set(TORCH_CXX_FLAGS "-D_GLIBCXX_USE_CXX11_ABI=0")/g' ${TORCH_CMAKE_CONFIG}
 
 # PyTorch C++ extensions frequently use ninja parallel builds
-RUN pip3.11 install --no-cache-dir scikit-build && \
-    pip3.11 install --no-cache-dir ninja
+RUN python3.11 -m pip install --no-cache-dir scikit-build && \
+    python3.11 -m pip install --no-cache-dir ninja
 
 # set the CUDA architectures that PyTorch extensions get built for
 ARG TORCH_CUDA_ARCH_ARGS

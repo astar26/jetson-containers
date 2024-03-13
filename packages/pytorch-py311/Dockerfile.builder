@@ -42,19 +42,19 @@ RUN git clone --branch v${PYTORCH_BUILD_VERSION} --depth=1 --recursive https://g
     export USE_DISTRIBUTED=1 && \
     export USE_TENSORRT=0 && \
     export ${PYTORCH_BUILD_EXTRA_ENV} && \
-    pip3.11 install -r requirements.txt && \
-    pip3.11 install --no-cache-dir scikit-build ninja && \
+    python3.11 -m pip install -r requirements.txt && \
+    python3.11 -m pip install --no-cache-dir scikit-build ninja && \
     python3.11 setup.py bdist_wheel && \
     cp dist/*.whl /opt && \
     rm -rf /tmp/pytorch
     
 # install the compiled wheel
-RUN pip3.11 install --verbose /opt/torch*.whl
+RUN python3.11 -m pip install --verbose /opt/torch*.whl
 
 RUN python3.11 -c 'import torch; print(f"PyTorch version: {torch.__version__}"); print(f"CUDA available:  {torch.cuda.is_available()}"); print(f"cuDNN version:   {torch.backends.cudnn.version()}"); print(f"torch.distributed:   {torch.distributed.is_available()}"); print(torch.__config__.show());'
 
 # patch for https://github.com/pytorch/pytorch/issues/45323
-RUN PYTHON_ROOT=`pip3.11 show torch | grep Location: | cut -d' ' -f2` && \
+RUN PYTHON_ROOT=`python3.11 -m pip show torch | grep Location: | cut -d' ' -f2` && \
     TORCH_CMAKE_CONFIG=$PYTHON_ROOT/torch/share/cmake/Torch/TorchConfig.cmake && \
     echo "patching _GLIBCXX_USE_CXX11_ABI in ${TORCH_CMAKE_CONFIG}" && \
     sed -i 's/  set(TORCH_CXX_FLAGS "-D_GLIBCXX_USE_CXX11_ABI=")/  set(TORCH_CXX_FLAGS "-D_GLIBCXX_USE_CXX11_ABI=0")/g' ${TORCH_CMAKE_CONFIG}

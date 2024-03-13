@@ -19,11 +19,11 @@ ARG TORCH_CUDA_ARCH_LIST
 # force rebuild on new releases
 ADD https://pypi.org/pypi/xformers/json /tmp/xformers_version.json
 
-RUN pip3.11 list && python3.11 -c 'import setuptools'
+RUN python3.11 -m pip list && python3.11 -c 'import setuptools'
 
 # install from pip
-RUN MAX_JOBS=8 pip3.11 install --no-cache-dir --verbose 'xformers!=0.0.21'
-RUN pip3.11 install --force-reinstall --no-cache-dir --verbose /opt/torch*.whl
+RUN MAX_JOBS=8 python3.11 -m pip install --no-cache-dir --verbose 'xformers!=0.0.21'
+RUN python3.11 -m pip install --force-reinstall --no-cache-dir --verbose /opt/torch*.whl
 
 ENV XFORMERS_MORE_DETAILS=1
-RUN pip3.11 show xformers && python3.11 -c 'import xformers.info; xformers.info.print_info()'
+RUN python3.11 -m pip show xformers && python3.11 -c 'import xformers.info; xformers.info.print_info()'

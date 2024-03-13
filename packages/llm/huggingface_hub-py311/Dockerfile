@@ -9,10 +9,10 @@ ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 
 # install huggingface_hub package (with CLI)
-RUN pip3.11 install --no-cache-dir --verbose huggingface_hub[cli]
+RUN python3.11 -m pip install --no-cache-dir --verbose huggingface_hub[cli]
 
 # ModuleNotFoundError: No module named 'dataclasses' (on JetPack 4)
-RUN pip3.11 install --no-cache-dir --verbose dataclasses
+RUN python3.11 -m pip install --no-cache-dir --verbose dataclasses
 
 # set the model cache dir
 ENV TRANSFORMERS_CACHE=/data/models/huggingface
@@ -26,7 +26,7 @@ COPY huggingface-downloader.py /usr/local/bin/_huggingface-downloader.py
 # make sure it loads
 RUN huggingface-cli --help && \
     huggingface-downloader --help && \
-    pip3.11 show huggingface_hub && \
+    python3.11 -m pip show huggingface_hub && \
     python3.11 -c 'import huggingface_hub; print(huggingface_hub.__version__)'
     
 # for benchmark timing

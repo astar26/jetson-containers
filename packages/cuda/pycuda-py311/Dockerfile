@@ -21,10 +21,10 @@ RUN cd /opt && \
     cp dist/pycuda*.whl /opt && \
     rm -rf /opt/pycuda
     
-RUN pip3.11 install --no-cache-dir --verbose /opt/pycuda*.whl
+RUN python3.11 -m pip install --no-cache-dir --verbose /opt/pycuda*.whl
 
 # this was needed at some point?
-#RUN pip3.11 install --no-cache-dir --verbose six
+#RUN python3.11 -m pip install --no-cache-dir --verbose six
 
 # make sure it loads
-RUN pip3.11 show pycuda && python3.11 -c 'import pycuda; print(pycuda.VERSION_TEXT)'
+RUN python3.11 -m pip show pycuda && python3.11 -c 'import pycuda; print(pycuda.VERSION_TEXT)'
